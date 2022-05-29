@@ -60,16 +60,20 @@ const HttpManager = {
   // 点赞
   setSupport: (params) => post(`comment/like`, params),
   // 返回所有评论
-  getAllComment: (type, id) => {
+  getAllComment: (type=-1, id=0,status=1) => {
     let url = "";
     if (type === 1) {
       url = `comment/songList/detail?songListId=${id}`;
     } else if (type === 0) {
       url = `comment/song/detail?songId=${id}`;
+    }else{
+      const params = new URLSearchParams();
+      params.append("type", type+"");
+      params.append("status", status+"");
+      return post("comment/detail",params);
     }
     return get(url);
   },
-
   // =======================> 歌曲 API
   // 返回指定歌曲ID的歌曲
   getSongOfId: (id) => get(`song/detail?id=${id}`),

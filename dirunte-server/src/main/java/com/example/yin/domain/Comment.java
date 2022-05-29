@@ -18,6 +18,7 @@ public class Comment {
     private Date createTime;
 
     private Byte type;
+    private Byte status;
 
     private Integer up;
 
@@ -76,7 +77,12 @@ public class Comment {
     public void setType(Byte type) {
         this.type = type;
     }
-
+    public Byte getStatus() {
+        return status;
+    }
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
     public Integer getUp() {
         return up;
     }

@@ -22,7 +22,7 @@ public interface CommentMapper {
     int updateCommentMsg(Comment record);
 
     int deleteComment(Integer id);
-
+    List<Comment> commentOfType(Comment record);
     List<Comment> commentOfSongId(Integer songId);
 
     List<Comment> commentOfSongListId(Integer songListId);

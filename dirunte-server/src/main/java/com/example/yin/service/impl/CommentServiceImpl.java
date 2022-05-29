@@ -42,4 +42,13 @@ public class CommentServiceImpl implements CommentService{
     {
         return commentMapper.commentOfSongListId(songListId);
     }
+    @Override
+    public List<Comment> commentOfType(Comment comment) {
+        return commentMapper.commentOfType(comment);
+    }
+//    @Override
+//    public List<Comment> commentOfType(Integer type, Integer status)
+//    {
+//        return commentMapper.commentOfType(type,status);
+//    }
 }

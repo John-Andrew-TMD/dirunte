@@ -36,6 +36,7 @@ import { Icon } from "@/enums";
 import { formatDate } from "@/utils";
 
 export default defineComponent({
+  name:"Comment",
   components: {
     YinIcon,
     Delete,
@@ -64,7 +65,7 @@ export default defineComponent({
     // 获取所有评论
     async function getComment() {
       try {
-        const result = (await HttpManager.getAllComment(type.value, playId.value)) as ResponseBody;
+        const result = (await HttpManager.getAllComment(type.value, +playId.value,1)) as ResponseBody;
         commentList.value = result.data;
         for (let index = 0; index < commentList.value.length; index++) {
           // 获取评论用户的昵称和头像
@@ -89,6 +90,7 @@ export default defineComponent({
         params.append("songId", `${playId.value}`);
       }
       params.append("userId", userId.value);
+      params.append("status", '0');
       params.append("type", `${type.value}`);
       params.append("content", textarea.value);
 

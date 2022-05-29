@@ -27,7 +27,7 @@ export default defineComponent({
 
 .login-logo {
   background-color: $color-blue-light;
-  height: calc(100vh - $header-height - $footer-height);
+  // height: calc(100vh - $header-height - $footer-height);
   min-width: 50vw;
   overflow: hidden;
   @include layout(center, center);

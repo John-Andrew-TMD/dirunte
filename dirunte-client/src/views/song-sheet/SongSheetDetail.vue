@@ -103,7 +103,7 @@ export default defineComponent({
       }
     }
 
-    getUserRank(userId.value, songListId.value);
+    // getUserRank(userId.value||1, songListId.value);
     getRank(songListId.value); // 获取评分
     getSongId(songListId.value); // 获取歌单里面的歌曲ID
 

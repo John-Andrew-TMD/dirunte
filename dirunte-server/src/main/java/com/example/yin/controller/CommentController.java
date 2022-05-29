@@ -7,10 +7,7 @@ import com.example.yin.service.impl.CommentServiceImpl;
 
 import org.apache.commons.lang3.ObjectUtils.Null;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -27,6 +24,7 @@ public class CommentController {
     public Object addComment(HttpServletRequest req) {
         String user_id = req.getParameter("userId");
         String type = req.getParameter("type");
+        String status = req.getParameter("status");
         String song_list_id = req.getParameter("songListId");
         String song_id = req.getParameter("songId");
         String content = req.getParameter("content").trim();
@@ -40,6 +38,7 @@ public class CommentController {
             comment.setSongListId(Integer.parseInt(song_list_id));
         }
         comment.setContent(content);
+        comment.setStatus(new Byte(status));
         comment.setCreateTime(new Date());
         boolean res = commentService.addComment(comment);
         if (res) {
@@ -61,13 +60,48 @@ public class CommentController {
             return new ErrorMessage("删除失败").getMessage();
         }
     }
-
+    // 更新评论状态
+    @ResponseBody
+    @RequestMapping(value = "/comment/update", method = RequestMethod.POST)
+    public Object updateComment(HttpServletRequest req) {
+        String id = req.getParameter("id");
+        String status = req.getParameter("status");
+        Comment comment = new Comment();
+        comment.setId(Integer.parseInt(id));
+        comment.setStatus(new Byte(status));
+        boolean result = commentService.updateCommentMsg(comment);
+        if (result) {
+            return new SuccessMessage<Null>("用户评论修改成功").getMessage();
+        } else {
+            return new ErrorMessage("修改失败").getMessage();
+        }
+    }
     // 获得指定歌曲 ID 的评论列表
     @RequestMapping(value = "/comment/song/detail", method = RequestMethod.GET)
     public Object commentOfSongId(HttpServletRequest req) {
         String songId = req.getParameter("songId");
 
         return new SuccessMessage<List<Comment>>(null, commentService.commentOfSongId(Integer.parseInt(songId))).getMessage();
+    }
+    // 获得指定歌曲 ID 的评论列表
+//    @PostMapping(value = "/comment/detail")
+    @ResponseBody
+    @RequestMapping(value = "/comment/detail", method = RequestMethod.POST)
+    public Object commentOfType(HttpServletRequest req) {
+        String type = req.getParameter("type");
+        String status = req.getParameter("status");
+        Comment comment = new Comment();
+        comment.setType(new Byte(type));
+        if(status!=null){
+            comment.setStatus(new Byte(status));
+        }
+       return new SuccessMessage<List<Comment>>(null, commentService.commentOfType(comment)).getMessage();
+        // boolean result = commentService.commentOfType(comment);
+        // if (result) {
+        //     return new SuccessMessage<Null>("查询成功").getMessage();
+        // } else {
+        //     return new ErrorMessage("查询失败").getMessage();
+        // }
     }
 
     // 获得指定歌单 ID 的评论列表

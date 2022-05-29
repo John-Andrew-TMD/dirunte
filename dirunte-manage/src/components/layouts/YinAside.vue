@@ -28,6 +28,10 @@
         <el-icon><Document /></el-icon>
         <span>轮播图管理</span>
       </el-menu-item>
+      <el-menu-item index="commentList">
+        <el-icon><User /></el-icon>
+        <span>用户评论管理</span>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>

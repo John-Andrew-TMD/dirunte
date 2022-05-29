@@ -37,6 +37,11 @@ const routes: Array<RouteRecordRaw> = [
         meta: { title: 'SwiperList' }
       },
       {
+        path: '/CommentList',
+        component: () => import('@/views/comment-mng/list.vue'),
+        meta: { title: 'CommentList' }
+      },
+      {
         path: '/Comment',
         component: () => import('@/views/CommentPage.vue'),
         meta: { title: 'Comment' }

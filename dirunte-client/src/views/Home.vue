@@ -6,8 +6,13 @@
     height="400px"
     :interval="4000"
   >
-    <el-carousel-item v-for="(item, index) in swiperList"  :key="index">
-      <el-image  style="width: 100%; height: 100%" :src="attachImageUrl(item.pic)" fit="cover"></el-image>
+    <el-carousel-item v-for="(item, index) in swiperList" :key="index">
+      <el-image
+        @click="goAblum(item)"
+        style="width: 100%; height: 100%"
+        :src="attachImageUrl(item.pic)"
+        fit="cover"
+      ></el-image>
     </el-carousel-item>
   </el-carousel>
   <!--热门歌手-->
@@ -19,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted,getCurrentInstance } from "vue";
 import PlayList from "@/components/PlayList.vue";
 import { NavName } from "@/enums";
 import { HttpManager } from "@/api";
@@ -29,7 +34,10 @@ const singerList = ref([]); // 歌手列表
 const swiperList = ref([]); // 轮播图列表
 const loading = ref(false); // 轮播图列表
 const attachImageUrl = ref(HttpManager.attachImageUrl);
-const { changeIndex } = mixin();
+const { changeIndex,routerManager } = mixin();
+function goAblum(item) {
+  routerManager("singer-detail", { path: `/singer-detail/${item.id}` });
+}
 try {
   HttpManager.getAllSinger().then((res) => {
     singerList.value = (res as ResponseBody).data.sort().slice(0, 10);

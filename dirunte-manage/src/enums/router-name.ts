@@ -4,6 +4,7 @@ export const enum RouterName {
   Song = "/song",
   Singer = "/singer",
   SongList = "/songList",
+  CommentList = "/commentList",
   SwiperList = "/swiperList",
   ListSong = "/listSong",
   ListSwiper = "/listSwiper",

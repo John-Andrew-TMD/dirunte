@@ -10,6 +10,7 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="type" property="type" jdbcType="TINYINT" />
     <result column="up" property="up" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List">
     id, user_id, song_id, song_list_id, content, create_time, type, up
@@ -22,20 +23,21 @@
   <select id="commentOfSongId" resultMap="BaseResultMap">
     select *
     from comment
-    where song_id = #{songId, jdbcType=INTEGER}
+    where song_id = #{songId, jdbcType=INTEGER} and status = 1
   </select>
   <select id="commentOfSongListId" resultMap="BaseResultMap">
     select *
     from comment
-    where song_list_id = #{songListId, jdbcType=INTEGER}
+    where song_list_id = #{songListId, jdbcType=INTEGER} and status = 1
   </select>
+ 
   <delete id="deleteComment" parameterType="java.lang.Integer">
     delete from comment
     where id = #{id, jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.example.yin.domain.Comment">
-    insert into comment (id, user_id, song_id, song_list_id, content, create_time, type, up)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{songId,jdbcType=INTEGER}, #{songListId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{type,jdbcType=TINYINT}, #{up,jdbcType=INTEGER})
+    insert into comment (id, user_id, song_id, song_list_id, content, create_time, type, up,status)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{songId,jdbcType=INTEGER}, #{songListId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{type,jdbcType=TINYINT}, #{status,jdbcType=TINYINT},#{up,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.example.yin.domain.Comment">
     insert into comment
@@ -64,6 +66,9 @@
       <if test="up != null">
         up,
       </if>
+      <if test="status != null">
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null"> #{id,jdbcType=INTEGER},
@@ -80,10 +85,25 @@
       </if>
       <if test="type != null"> #{type,jdbcType=TINYINT},
       </if>
+      <if test="status != null"> #{status,jdbcType=TINYINT},
+      </if>
       <if test="up != null"> #{up,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
+  <select id="commentOfType" resultMap="BaseResultMap" parameterType="com.example.yin.domain.Comment">
+    select *
+    from comment
+    <where>
+      <if test="type != -1">
+        and type = #{type, jdbcType=TINYINT}
+      </if>
+      <if test="status != null">
+        and status = #{status, jdbcType=TINYINT}
+      </if>
+    </where>
+    order by create_time desc
+  </select>
   <update id="updateCommentMsg" parameterType="com.example.yin.domain.Comment">
     update comment
     <set >
@@ -105,6 +125,9 @@
       <if test="type != null">
         type = #{type,jdbcType=TINYINT},
       </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
       <if test="up != null">
         up = #{up,jdbcType=INTEGER},
       </if>
@@ -119,6 +142,7 @@
       content = #{content,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       type = #{type,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
       up = #{up,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

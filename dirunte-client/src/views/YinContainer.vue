@@ -3,12 +3,8 @@
     <el-header>
       <yin-header></yin-header>
     </el-header>
-    <div>
       <router-view />
-      <yin-current-play></yin-current-play>
-      <yin-scroll-top></yin-scroll-top>
-      <yin-audio></yin-audio>
-    </div>
+       <yin-scroll-top></yin-scroll-top>
       <yin-footer></yin-footer>
   </el-container>
 </template>

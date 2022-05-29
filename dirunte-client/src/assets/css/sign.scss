@@ -2,20 +2,17 @@
 @import "@/assets/css/global.scss";
 
 @media screen and (min-width: $sm) {
-  .sign {
-    width: 300px;
-    position: absolute;
-    left: 60vw;
-    top: $header-height + 60px;
-  }
+
 }
 
 @media screen and (max-width: $sm) {
+  .login-logo{
+    display: none;
+  }
   .sign {
-    width: 60vw;
+    border: none;
     position: relative;
     margin: auto;
-    margin-top: -78vh;
   }
 }
 

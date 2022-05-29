@@ -12,14 +12,14 @@
     </div>
     <!--设置-->
     <yin-header-nav v-if="!token" :styleList="signList" :activeName="activeNavName" @click="goPage"></yin-header-nav>
-    <!-- <el-dropdown class="user-wrap" v-if="token" trigger="click">
+    <el-dropdown class="user-wrap" v-if="token" trigger="click">
       <el-image class="user" fit="contain" :src="attachImageUrl(userPic)" />
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item v-for="(item, index) in menuList" :key="index" @click.stop="goMenuList(item.path)">{{ item.name }}</el-dropdown-item>
         </el-dropdown-menu>
       </template>
-    </el-dropdown> -->
+    </el-dropdown>
   </div>
 </template>
 
@@ -159,7 +159,8 @@ export default defineComponent({
 }
 
 .yin-header-nav {
-  flex: 1;
+  // flex: 1;
+  margin-left: auto;
 }
 
 /*搜索输入框*/

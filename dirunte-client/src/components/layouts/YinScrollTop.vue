@@ -1,9 +1,18 @@
 <template>
   <div class="fix-box">
-    <div class="fix-banner">
-      <div class="totick">专业体味问题解决方案</div>
-      <div class="kufu-click">在线客服咨询</div>
-      <div class="phone-click">400-6000-382</div>
+    <div class="fix-banner" v-if = "isShow">
+      <i class="iconfont icon-close-square" @click="setShow(false)"></i>
+      <div class="totick">专业体味问题<br/>解决方案</div>
+      <div class="fix-content">
+        <div>
+          <i class="iconfont icon-kefu"></i>
+          <div class="kufu-click mt-10">在线客服咨询</div>
+        </div>
+        <div>
+          <i class="iconfont icon-24gf-telephone2"></i>
+          <div class="phone-click mt-10">400-6000-382</div>
+        </div>
+      </div>
     </div>
     <div class="scroll-top" @click="returnTop">
       <div class="box-in"></div>
@@ -12,10 +21,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent,ref } from "vue";
 
 export default defineComponent({
   setup() {
+    const isShow = ref(true)
+    const setShow = (value)=>{
+      isShow.value = value
+    }
     function returnTop() {
       let timer: number = null;
       cancelAnimationFrame(timer);
@@ -31,7 +44,7 @@ export default defineComponent({
         if (t === T) cancelAnimationFrame(timer);
       });
     }
-    return { returnTop };
+    return { returnTop,setShow,isShow };
   },
 });
 </script>
@@ -48,11 +61,45 @@ export default defineComponent({
   overflow: hidden;
   padding: 10px;
   .fix-banner {
+    position: relative;
     background-color: $color-white;
     margin-bottom: 14px;
     border-radius: 4px;
+    font-size: 16px;
+    min-width: 150px;
     box-shadow: 0 0 4px 3px rgba(0, 0, 0, 0.2);
-    padding: 5px;
+    .icon-close-square{
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #1f8ceb;
+      cursor: pointer;
+    }
+    .totick{
+      padding: 10px;
+      text-align: center;
+      color: #1f8ceb;
+    }
+    .fix-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #1f8ceb;
+      color: #fff;
+      width: 100%;
+      &>*{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+      &>*:nth-child(1){
+        margin-top: 15px;
+      }
+      .iconfont {
+        font-size: 56px;
+      }
+    }
   }
   .scroll-top {
     position: relative;
@@ -93,6 +140,11 @@ export default defineComponent({
     border-color: $color-black transparent transparent $color-black;
     // 按钮中间的小三角翻转
     transform: rotate(45deg) translate(-5px, -5px);
+  }
+}
+@media screen and (max-width: $sm) {
+  .fix-banner{
+    display: none;
   }
 }
 </style>

@@ -18,6 +18,11 @@ module.exports = defineConfig({
   parallel: true,
   lintOnSave: false,
   productionSourceMap: false,
+  css: {
+    extract: true,
+    // 是否开启 CSS source map？
+    sourceMap: false
+  },
   devServer: {
   	// 自动开启浏览器
   	open: false,

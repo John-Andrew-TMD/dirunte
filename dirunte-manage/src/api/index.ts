@@ -1,5 +1,6 @@
 import { get, post, deletes, getBaseURL } from './request'
-
+import CommentManager from "./modules/comment";
+import SwiperManager from "./modules/swiper";
 const HttpManager = {
   // 获取图片信息
   attachImageUrl: (url) => `${getBaseURL()}/${url}`,
@@ -24,14 +25,6 @@ const HttpManager = {
   getCollectionOfUser: (userId) => get(`collection/detail?userId=${userId}`),
   // 删除收藏的歌曲
   deleteCollection: (userId, songId) => deletes(`collection/delete?userId=${userId}&&songId=${songId}`),
-
-  // =======================> 评论列表 API
-  // 获得指定歌曲ID的评论列表
-  getCommentOfSongId: (songId) => get(`comment/song/detail?songId=${songId}`),
-  // 获得指定歌单ID的评论列表
-  getCommentOfSongListId: (songListId) => get(`comment/songList/detail?songListId=${songListId}`),
-  // 删除评论
-  deleteComment: (id) => get(`comment/delete?id=${id}`),
 
   // =======================> 歌手 API
   // 返回所有歌手
@@ -69,24 +62,15 @@ const HttpManager = {
   // 删除歌单
   deleteSongList: (id) => get(`songList/delete?id=${id}`),
 
-  // =======================> 轮播图 API
-  // 添加轮播图
-  setSwiperList: (params) => post(`swiperList/add`, params),
-  // 获取全部轮播图
-  getSwiperList: () => get(`swiperList`),
-  // 更新轮播图信息
-  updateSwiperListMsg: (params) => post(`swiperList/update`, params),
-  // 删除轮播图
-  deleteSwiperList: (id) => get(`swiperList/delete?id=${id}`),
-
   // =======================> 歌单歌曲 API
   // 给歌单添加歌曲
   setListSong: (params) => post(`listSong/add`, params),
   // 返回歌单里指定歌单ID的歌曲
   getListSongOfSongId: (songListId) => get(`listSong/detail?songListId=${songListId}`),
   // 删除歌单里的歌曲
-  deleteListSong: (songId) => get(`listSong/delete?songId=${songId}`)
-
+  deleteListSong: (songId) => get(`listSong/delete?songId=${songId}`),
+  ...CommentManager,
+  ...SwiperManager
 }
 
 export { HttpManager }

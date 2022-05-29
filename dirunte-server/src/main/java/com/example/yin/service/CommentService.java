@@ -12,8 +12,9 @@ public interface CommentService {
 
     boolean deleteComment(Integer id);
 
+    List<Comment> commentOfType(Comment comment);
     List<Comment> commentOfSongId(Integer songId);
 
     List<Comment> commentOfSongListId(Integer songListId);
-
+//    List<Comment> commentOfType(Integer type);
 }

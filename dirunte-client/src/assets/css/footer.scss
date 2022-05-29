@@ -91,3 +91,9 @@
     }
   }
 }
+@media screen and (max-width: $sm) {
+  .footer-wrapper{
+    display: none;
+  }
+
+}
